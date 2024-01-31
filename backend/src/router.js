@@ -2,18 +2,18 @@ const express = require("express");
 
 const router = express.Router();
 
-/* ************************************************************************* */
-// Define Your API Routes Here
-/* ************************************************************************* */
+// Imports
+const userRouter = require("./routers/userRouter");
+const postRouter = require("./routers/postRouter");
+const articleRouter = require("./routers/articleRouter");
+const commentRouter = require("./routers/commentRouter");
+const authRouter = require("./routers/authRouter");
 
-// Import itemControllers module for handling item-related operations
-const itemControllers = require("./controllers/itemControllers");
-
-// Route to get a list of items
-router.get("/", itemControllers.browse);
-router.get("/:id", itemControllers.read);
-/* ************************************************************************* */
-router.post("/", itemControllers.add);
-router.use("/api", router);
+// Routes
+router.use("/user", userRouter);
+router.use("/forum", postRouter);
+router.use("/article", articleRouter);
+router.use("/comment", commentRouter);
+router.use("/auth", authRouter);
 
 module.exports = router;

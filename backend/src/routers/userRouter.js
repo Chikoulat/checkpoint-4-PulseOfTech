@@ -22,7 +22,7 @@ router.get("/:id", verifyToken, read);
 router.put("/:id", validateUserData, hash, edit);
 
 // Post
-router.post("/", validateUserData, hash, add);
+router.post("/", hash, add);
 
 // Delete
 router.delete("/:id", destroy);

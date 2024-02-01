@@ -14,7 +14,7 @@ class PostManager extends AbstractManager {
   // Get a post by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE id = ?`,
+      `SELECT * FROM ${this.table} WHERE user_id = ?`,
       [id]
     );
     return result;
@@ -41,7 +41,7 @@ class PostManager extends AbstractManager {
   // Delete post by id
   async delete(id) {
     const [result] = await this.database.query(
-      `DELETE FROM ${this.table} WHERE id = ?`,
+      `DELETE FROM ${this.table} WHERE user_id = ?`,
       [id]
     );
     return result.affectedRows > 0;

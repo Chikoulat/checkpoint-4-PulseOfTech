@@ -7,14 +7,16 @@ class PostManager extends AbstractManager {
 
   // Get all posts
   async readAll() {
-    const [result] = await this.database.query(`SELECT * FROM ${this.table}`);
+    const [result] = await this.database.query(
+      `SELECT post.*, user.username FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id`
+    );
     return result;
   }
 
   // Get a post by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE user_id = ?`,
+      `SELECT post.*, user.username FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id WHERE ${this.table}.id = ?`,
       [id]
     );
     return result;

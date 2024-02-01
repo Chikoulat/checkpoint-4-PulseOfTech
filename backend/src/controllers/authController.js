@@ -21,7 +21,7 @@ const login = async (req, res, next) => {
       delete user.password;
 
       const token = jwt.sign({ sub: user.id }, process.env.APP_SECRET, {
-        expiresIn: "1h",
+        expiresIn: "3h",
       });
 
       res.json({

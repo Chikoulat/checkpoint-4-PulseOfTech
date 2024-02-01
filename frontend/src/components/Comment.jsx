@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-function comment() {
+function comment({ comments, setComments }) {
   const { id } = useParams();
-  const [comments, setComments] = useState(null);
 
   const formatDateString = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -24,19 +23,20 @@ function comment() {
     };
 
     fetchComment();
-  }, [id]);
+  }, [id, comments]);
   if (!comments) {
     return <div>Loading...</div>;
   }
 
   return (
-    comments && (
-      <div>
-        <h4>{comments[0].username}</h4>
-        <p>{formatDateString(comments[0].creation_date)}</p>
-        <p>{comments[0].content}</p>
+    comments &&
+    comments.map((c) => (
+      <div key={c.id}>
+        <h4>{c.username}</h4>
+        <p>{formatDateString(c.creation_date)}</p>
+        <p>{c.content}</p>
       </div>
-    )
+    ))
   );
 }
 

@@ -29,12 +29,12 @@ const read = async (req, res) => {
 // Put comment by id
 const edit = async (req, res) => {
   const { id } = req.params;
-  const { content, userId, forumId } = req.body;
+  const { content, userId, postId } = req.body;
   try {
     const editComment = await tables.comment.update(
       content,
       userId,
-      forumId,
+      postId,
       parseInt(id, 10)
     );
     if (editComment) {
@@ -49,10 +49,10 @@ const edit = async (req, res) => {
 
 // Add comment
 const add = async (req, res, next) => {
-  const { content, userId, forumId } = req.body;
+  const { content, userId, postId } = req.body;
 
   try {
-    const insertId = await tables.comment.create(content, userId, forumId);
+    const insertId = await tables.comment.create(content, userId, postId);
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);

@@ -13,9 +13,9 @@ const browse = async (req, res) => {
 
 // Get a user by id
 const read = async (req, res) => {
-  const { id } = req.params;
+  const { sub } = req.auth;
   try {
-    const getUserId = await tables.user.read(parseInt(id, 10));
+    const getUserId = await tables.user.read(sub);
     if (getUserId) {
       res.json(getUserId).status(200);
     } else {
@@ -36,7 +36,7 @@ const edit = async (req, res) => {
       email,
       password,
       profilePicture,
-      parseInt(id, 10)
+      id
     );
     if (editUser) {
       res.json(editUser).status(200);
@@ -67,9 +67,9 @@ const add = async (req, res, next) => {
 
 // Delete user by id
 const destroy = async (req, res) => {
-  const { id } = req.params;
+  const { sub } = req.auth;
   try {
-    const deleteUser = await tables.user.delete(parseInt(id, 10));
+    const deleteUser = await tables.user.delete(sub);
     if (deleteUser) {
       res.json("User has been succefully deleted").status(200);
     } else {

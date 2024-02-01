@@ -12,6 +12,7 @@ import UserPofile from "./components/sideSection/UserPofile";
 import UserForum from "./components/sideSection/UserForum";
 import UserComment from "./components/sideSection/UserComment";
 import UserArticle from "./components/sideSection/UserArticle";
+import SingleForum from "./pages/SingleForum";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,9 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+        loader: () => fetch(`${import.meta.env.VITE_BACKEND_URL}/article`),
       },
+
       {
         path: "/inscription",
         element: <SignUp />,
@@ -32,9 +35,14 @@ const router = createBrowserRouter([
       {
         path: "/forum",
         element: <Forum />,
+        loader: () => fetch(`${import.meta.env.VITE_BACKEND_URL}/forum`),
       },
       {
-        path: "/article",
+        path: "/post-forum/:id",
+        element: <SingleForum />,
+      },
+      {
+        path: "/article/:id",
         element: <Article />,
       },
       {

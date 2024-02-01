@@ -9,19 +9,18 @@ const {
   add,
   destroy,
 } = require("../controllers/postController");
-const { verifyToken } = require("../middlewares/token");
 
 // Get
 router.get("/", browse);
-router.get("/:id", verifyToken, read);
+router.get("/:id", read);
 
 // Put
-router.put("/:id", verifyToken, edit);
+router.put("/:id", edit);
 
 // Post
-router.post("/", verifyToken, add);
+router.post("/", add);
 
 // Delete
-router.delete("/:id", verifyToken, destroy);
+router.delete("/:id", destroy);
 
 module.exports = router;

@@ -8,7 +8,7 @@ class UserManager extends AbstractManager {
   // Get all users
   async readAll() {
     const [result] = await this.database.query(
-      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.title, article.image FROM ${this.table} INNER JOIN user_article ON user.id = user_article.user_id INNER JOIN article ON article.id = user_article.article_id`
+      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.title, article.image FROM ${this.table} LEFT JOIN user_article ON user.id = user_article.user_id LEFT JOIN article ON article.id = user_article.article_id`
     );
     return result;
   }
@@ -16,7 +16,7 @@ class UserManager extends AbstractManager {
   // Get a user by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.title, article.image FROM ${this.table} INNER JOIN user_article ON user.id = user_article.user_id INNER JOIN article ON article.id = user_article.article_id WHERE ${this.table}.id = ?`,
+      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.title, article.image FROM ${this.table} LEFT JOIN user_article ON user.id = user_article.user_id LEFT JOIN article ON article.id = user_article.article_id WHERE ${this.table}.id = ?`,
       [id]
     );
     return result;

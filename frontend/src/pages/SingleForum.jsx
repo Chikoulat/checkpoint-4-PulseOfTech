@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Comment from "../components/Comment";
 
-function comment() {
+function SingleForum() {
   const { id } = useParams();
-  const [comments, setComments] = useState(null);
+  const [forum, setForum] = useState(null);
 
   const formatDateString = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -12,32 +13,39 @@ function comment() {
   };
 
   useEffect(() => {
-    const fetchComment = async () => {
+    const fetchForum = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/comment/${id}`
+          `${import.meta.env.VITE_BACKEND_URL}/forum/${id}`
         );
-        setComments(response.data);
+        setForum(response.data);
       } catch (error) {
         console.error("Error fetching forum data:", error);
       }
     };
 
-    fetchComment();
+    fetchForum();
   }, [id]);
-  if (!comments) {
+
+  if (!forum) {
     return <div>Loading...</div>;
   }
 
   return (
-    comments && (
-      <div>
-        <h4>{comments[0].username}</h4>
-        <p>{formatDateString(comments[0].creation_date)}</p>
-        <p>{comments[0].content}</p>
-      </div>
+    forum && (
+      <>
+        <div>
+          <h1>{forum[0].title}</h1>
+          <h3>{forum[0].username}</h3>
+          <p>{formatDateString(forum[0].creation_date)}</p>
+          <p>{forum[0].content}</p>
+        </div>
+        <div>
+          <Comment />
+        </div>
+      </>
     )
   );
 }
 
-export default comment;
+export default SingleForum;

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Comment from "../components/Comment";
+import WriteComment from "../components/WriteComment";
 
 function SingleForum() {
   const { id } = useParams();
   const [forum, setForum] = useState(null);
+  const [comments, setComments] = useState(null);
 
   const formatDateString = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -41,7 +43,10 @@ function SingleForum() {
           <p>{forum[0].content}</p>
         </div>
         <div>
-          <Comment />
+          <Comment comments={comments} setComments={setComments} />
+        </div>
+        <div>
+          <WriteComment id={id} setComments={setComments} />
         </div>
       </>
     )

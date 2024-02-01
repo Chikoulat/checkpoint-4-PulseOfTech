@@ -23,19 +23,19 @@ class CommentManager extends AbstractManager {
   }
 
   // Put comment by id
-  async update(content, userId, forumId, id) {
+  async update(content, userId, postId, id) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET content = ?, user_id = ?, forum_id = ? WHERE id = ?`,
-      [content, userId, forumId, id]
+      `UPDATE ${this.table} SET content = ?, user_id = ?, post_id = ? WHERE id = ?`,
+      [content, userId, postId, id]
     );
     return result.affectedRows > 0;
   }
 
   // Add comment
-  async create(content, userId, forumId) {
+  async create(content, userId, postId) {
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (content, user_id, forum_id) VALUES (?,?,?)`,
-      [content, userId, forumId]
+      `INSERT INTO ${this.table} (content, user_id, post_id) VALUES (?,?,?)`,
+      [content, userId, postId]
     );
     return result.insertId;
   }

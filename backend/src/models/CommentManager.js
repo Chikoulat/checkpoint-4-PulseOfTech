@@ -8,7 +8,7 @@ class CommentManager extends AbstractManager {
   // Get all comments
   async readAll() {
     const [result] = await this.database.query(
-      `SELECT comment.*, user.username FROM ${this.table} INNER JOIN user ON comment.user_id = user.id`
+      `SELECT comment.*, user.username, user.profile_picture FROM ${this.table} INNER JOIN user ON comment.user_id = user.id`
     );
     return result;
   }
@@ -16,7 +16,7 @@ class CommentManager extends AbstractManager {
   // Get an comment by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT comment.*, user.username FROM ${this.table} INNER JOIN user ON comment.user_id = user.id WHERE user.id = ?`,
+      `SELECT comment.*, user.username, user.profile_picture, post.title FROM ${this.table} INNER JOIN user ON comment.user_id = user.id INNER JOIN post ON post.id = ${this.table}.post_id WHERE post_id = ?`,
       [id]
     );
     return result;

@@ -12,11 +12,10 @@ const {
 
 const { hash } = require("../middlewares/hashpassword");
 const { validateUserData } = require("../middlewares/validateUser");
-const { verifyToken } = require("../middlewares/token");
 
 // Get
 router.get("/", browse);
-router.get("/:id", verifyToken, read);
+router.get("/:id", read);
 
 // Put
 router.put("/:id", validateUserData, hash, edit);

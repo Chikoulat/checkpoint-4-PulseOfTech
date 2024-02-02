@@ -8,7 +8,7 @@ class PostManager extends AbstractManager {
   // Get all posts
   async readAll() {
     const [result] = await this.database.query(
-      `SELECT post.*, user.username FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id`
+      `SELECT post.*, user.username, user.profile_picture FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id`
     );
     return result;
   }
@@ -16,7 +16,7 @@ class PostManager extends AbstractManager {
   // Get a post by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT post.*, user.username FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id WHERE ${this.table}.id = ?`,
+      `SELECT post.*, user.username, user.profile_picture FROM ${this.table} INNER JOIN user ON ${this.table}.user_id = user.id WHERE ${this.table}.id = ?`,
       [id]
     );
     return result;
@@ -32,10 +32,10 @@ class PostManager extends AbstractManager {
   }
 
   // Add post
-  async create(title, content) {
+  async create(title, content, userId) {
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (title, content) VALUES (?, ?)`,
-      [title, content]
+      `INSERT INTO ${this.table} (title, content, user_id) VALUES (?, ?, ?)`,
+      [title, content, userId]
     );
     return result.insertId;
   }

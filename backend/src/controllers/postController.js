@@ -44,9 +44,9 @@ const edit = async (req, res) => {
 
 // Add post
 const add = async (req, res, next) => {
-  const { title, content } = req.body;
+  const { title, content, userId } = req.body;
   try {
-    const insertId = await tables.post.create(title, content);
+    const insertId = await tables.post.create(title, content, userId);
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);

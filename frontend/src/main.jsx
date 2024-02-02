@@ -13,6 +13,7 @@ import UserForum from "./components/sideSection/UserForum";
 import UserComment from "./components/sideSection/UserComment";
 import UserArticle from "./components/sideSection/UserArticle";
 import SingleForum from "./pages/SingleForum";
+import Error404 from "./pages/Error404";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/article/:id",
         element: <Article />,
+      },
+      {
+        path: "*",
+        element: <Error404 />,
       },
       {
         path: "/profil",

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { useRef, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Register() {
@@ -12,7 +12,6 @@ function Register() {
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
-  const { setAuth } = useOutletContext();
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -37,8 +36,7 @@ function Register() {
     try {
       await axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/user`, data)
-        .then((res) => {
-          setAuth(res.data);
+        .then(() => {
           navigate("/connexion");
         });
     } catch (error) {
@@ -48,43 +46,62 @@ function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">username</label>{" "}
-        <input
-          type="username"
-          id="username"
-          value={username}
-          onChange={handleUsername}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">email</label>{" "}
-        <input ref={emailRef} type="email" id="email" />
-      </div>
-      <div>
-        <label htmlFor="password">password</label>{" "}
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />{" "}
-        {password.length >= 8 ? "✅" : "❌"}
-      </div>
-      <div>
-        <label htmlFor="confirm-password">confirm password</label>{" "}
-        <input
-          type="password"
-          id="confirm-password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />{" "}
-        {password === confirmPassword ? "✅" : "❌"}
-      </div>
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 flex justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+      >
+        <div className="border-2 rounded-lg relative">
+          <input
+            placeholder="Nom d'utilisateur"
+            className="input w-80 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            type="username"
+            id="username"
+            value={username}
+            onChange={handleUsername}
+          />
+        </div>
+        <div className="border-2 rounded-lg relative">
+          <input
+            placeholder="Adresse mail"
+            className="input w-80 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            ref={emailRef}
+            type="email"
+            id="email"
+          />
+        </div>
+        <div className="border-2 rounded-lg relative flex flex-row items-center">
+          <input
+            placeholder="Mot de passe"
+            className="input w-80 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            type="password"
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />{" "}
+          {password.length >= 8 ? "✅" : "❌"}
+        </div>
 
-      <button type="submit">Send</button>
-    </form>
+        <div className="border-2 rounded-lg relative flex flex-row items-center">
+          <input
+            placeholder="Confirmer le mot de passe"
+            className="input w-80 Toastify__toast-icon rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+            type="password"
+            id="confirm-password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />{" "}
+          {password === confirmPassword ? "✅" : "❌"}
+        </div>
+
+        <button
+          type="submit"
+          className="input w-36 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+        >
+          Inscription
+        </button>
+      </form>
+    </div>
   );
 }
 

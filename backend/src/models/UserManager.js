@@ -16,7 +16,7 @@ class UserManager extends AbstractManager {
   // Get a user by id
   async read(id) {
     const [result] = await this.database.query(
-      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.title, article.image FROM ${this.table} LEFT JOIN user_article ON user.id = user_article.user_id LEFT JOIN article ON article.id = user_article.article_id WHERE ${this.table}.id = ?`,
+      `SELECT user.username, user.email, user.password ,user.profile_picture AS profilePicture, article.id, article.title AS articleTitle, article.image, post.title AS postTitle, comment.* FROM ${this.table} LEFT JOIN user_article ON user.id = user_article.user_id LEFT JOIN article ON article.id = user_article.article_id LEFT JOIN comment ON ${this.table}.id = comment.user_id INNER JOIN post ON  ${this.table}.id = post.user_id WHERE ${this.table}.id = ?`,
       [id]
     );
     return result;

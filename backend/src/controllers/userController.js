@@ -13,9 +13,9 @@ const browse = async (req, res) => {
 
 // Get a user by id
 const read = async (req, res) => {
-  const { sub } = req.auth;
+  const { id } = req.params;
   try {
-    const getUserId = await tables.user.read(sub);
+    const getUserId = await tables.user.read(parseInt(id, 10));
     if (getUserId) {
       res.json(getUserId).status(200);
     } else {

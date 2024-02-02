@@ -10,8 +10,8 @@ function SingleForum() {
   const [comments, setComments] = useState(null);
 
   const formatDateString = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    const options = { day: "2-digit", month: "short", year: "numeric" };
+    return new Date(dateString).toLocaleDateString("fr-FR", options);
   };
 
   useEffect(() => {
@@ -34,22 +34,31 @@ function SingleForum() {
   }
 
   return (
-    forum && (
-      <>
-        <div>
-          <h1>{forum[0].title}</h1>
-          <h3>{forum[0].username}</h3>
-          <p>{formatDateString(forum[0].creation_date)}</p>
-          <p>{forum[0].content}</p>
+    <div className="px-4 py-4 mx-5 font-normal bg-gray-200 rounded-lg my-6">
+      <div className="mb-10">
+        <div className="flex items-center gap-4 mb-2">
+          <img
+            src={forum[0].profile_picture}
+            alt={forum[0].username}
+            className="h-24 w-24 rounded-lg object-cover"
+          />
+          <h1 className="mb-2 text-2xl font-semibold leading-snug">
+            {forum[0].title}
+          </h1>
         </div>
-        <div>
-          <Comment comments={comments} setComments={setComments} />
-        </div>
-        <div>
-          <WriteComment id={id} setComments={setComments} />
-        </div>
-      </>
-    )
+        <h3 className="mb-4">
+          {forum[0].username} - {formatDateString(forum[0].creation_date)}
+        </h3>
+        <p className="text-gray-700">{forum[0].content}</p>
+      </div>
+
+      <div>
+        <Comment comments={comments} setComments={setComments} />
+      </div>
+      <div>
+        <WriteComment id={id} setComments={setComments} />
+      </div>
+    </div>
   );
 }
 

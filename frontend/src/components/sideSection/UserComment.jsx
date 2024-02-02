@@ -10,12 +10,7 @@ function UserComment() {
     const getComment = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/comment/${auth.user.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${auth.token}`,
-            },
-          }
+          `${import.meta.env.VITE_BACKEND_URL}/user/${auth.user.id}`
         );
         setComment(response.data);
       } catch (error) {
@@ -29,16 +24,25 @@ function UserComment() {
   }, [auth]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       {comment.length === 0 ? (
-        <p>Loading...</p>
+        <p>Tu n'as pas encore de commentaires</p>
       ) : (
         comment.map((c) => (
-          <div key={c.id}>
-            <h3>{c.content}</h3>
-          </div>
+          <>
+            <div
+              key={c.id}
+              className="rounded-xl border-2 border-gray-100 bg-white m-6 w-3/4"
+            >
+              <h1 className="font-medium sm:text-lg">{c.postTitle}</h1>
+              <h3 className="line-clamp-2 text-sm text-gray-700">
+                {c.content}
+              </h3>
+            </div>
+            <hr />
+          </>
         ))
-      )}
+      )}{" "}
     </div>
   );
 }

@@ -85,7 +85,7 @@ app.use(express.json());
 const router = require("./router");
 
 // Mount the API routes under the "/api" endpoint
-app.use("/", router);
+app.use("/api", router);
 /* ************************************************************************* */
 
 // Production-ready setup: What is it for, and when should I enable it?
